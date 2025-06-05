@@ -1,0 +1,17 @@
+{
+  "portal_url": "https://example-park-district.com/reservations",
+  "login": {
+    "username": "YOUR_USERNAME",
+    "password": "YOUR_PASSWORD"
+  },
+  "release_time": "07:00:00",
+  "release_timezone": "America/Chicago",
+  "days_ahead": 7,
+  "preferred_slots": [
+    { "day_of_week": "Saturday", "start_time": "09:00", "duration_minutes": 60, "court_priority": [1, 2, 3] },
+    { "day_of_week": "Sunday", "start_time": "09:00", "duration_minutes": 60, "court_priority": [1, 2, 3] }
+  ],
+  "headless": true,
+  "max_retries": 5,
+  "retry_delay_seconds": 2
+}
