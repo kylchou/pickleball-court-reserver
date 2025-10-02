@@ -33,6 +33,8 @@ class Config:
     headless: bool
     max_retries: int
     retry_delay_seconds: float
+    webhook_url: str | None
+    notify_on_success: bool
 
     @classmethod
     def from_dict(cls, raw: dict) -> "Config":
@@ -59,6 +61,10 @@ class Config:
             headless=raw.get("headless", True),
             max_retries=raw.get("max_retries", 5),
             retry_delay_seconds=raw.get("retry_delay_seconds", 2),
+            # Both optional -- leave webhook_url unset and this stays silent,
+            # exactly like before this existed.
+            webhook_url=raw.get("webhook_url"),
+            notify_on_success=raw.get("notify_on_success", False),
         )
 
     @classmethod

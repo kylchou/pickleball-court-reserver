@@ -98,6 +98,8 @@ def make_config(**overrides) -> Config:
         headless=True,
         max_retries=2,
         retry_delay_seconds=0,
+        webhook_url=None,
+        notify_on_success=False,
     )
     defaults.update(overrides)
     return Config(**defaults)
