@@ -29,6 +29,15 @@ Add `--dry-run` if you just want to check that login and slot-searching
 still work without actually submitting a booking -- handy after the site
 changes its layout on you.
 
+## Getting notified
+
+Set `webhook_url` in `config.json` to a Discord webhook URL and a failed run
+(or a crash -- login broke, site layout changed) pings that channel instead
+of you finding out later that you don't have a court. Set
+`notify_on_success` to `true` too if you also want a ping when it actually
+books something. Leave `webhook_url` blank and this does nothing, same as
+before it existed.
+
 ## Stuff I ran into building this
 
 - The "book" button gets disabled with CSS instead of removed from the page

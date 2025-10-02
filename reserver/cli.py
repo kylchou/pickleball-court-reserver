@@ -9,7 +9,7 @@ from reserver.browser import make_driver
 from reserver.config import Config, ConfigError
 from reserver.logging_config import setup_logging
 from reserver.scheduler import wait_until_release
-from reserver import auth
+from reserver import auth, notify
 
 log = logging.getLogger(__name__)
 
@@ -48,10 +48,19 @@ def main(argv: list[str] | None = None) -> int:
         auth.login(driver, config.portal_url, config.username, config.password)
         result = book_preferred_slot(driver, config, dry_run=args.dry_run)
         log.info("Done: %s", result)
+        if config.notify_on_success and not args.dry_run:
+            notify.send(config.webhook_url, f"Booked: {result}")
         return 0
     except BookingFailedError as exc:
         log.error(str(exc))
+        notify.send(config.webhook_url, f"Booking failed: {exc}")
         return 2
+    except Exception as exc:
+        # Anything else (site layout changed, login broke, etc.) -- still
+        # want to know about it instead of finding out hours later.
+        log.exception("Run crashed unexpectedly")
+        notify.send(config.webhook_url, f"Run crashed: {exc}")
+        raise
     finally:
         driver.quit()
 

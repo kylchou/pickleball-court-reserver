@@ -13,5 +13,7 @@
   ],
   "headless": true,
   "max_retries": 5,
-  "retry_delay_seconds": 2
+  "retry_delay_seconds": 2,
+  "webhook_url": "",
+  "notify_on_success": false
 }
