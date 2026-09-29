@@ -1,4 +1,3 @@
-"""Login flow for the booking portal."""
 from __future__ import annotations
 
 import logging

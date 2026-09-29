@@ -1,12 +1,10 @@
-# Pickleball Court Reserver
+# pickleball-court-reserver
 
-Our park district releases next week's court times at 7am sharp and they're
-gone in like 10 seconds. I got tired of trying to click fast enough every
-morning so I wrote this to do it for me.
+My park district drops next week's court times at 7am and they're gone in
+about 10 seconds. I kept losing, so now a script does the clicking for me.
 
-It's a Selenium script that waits until the exact second slots open, logs
-in, and works down a priority list of courts/times I set ahead of time. If
-someone beats me to my first choice it just tries the next one on the list.
+It waits until the exact second slots open, logs in, and goes down a list of
+courts/times I want. If my first pick is taken it moves on to the next one.
 
 ## Setup
 
@@ -15,41 +13,33 @@ pip install -r requirements.txt
 cp config.example.json config.json
 ```
 
-Fill in `config.json` with the portal URL, your login, and which slots you
-want, in priority order. It's gitignored already so don't worry about
-committing it by accident.
+Put the portal URL, your login, and the slots you want (in order) in
+`config.json`. It's already in `.gitignore`.
 
-## Running it
+## Running
 
 ```bash
 python main.py --config config.json
 ```
 
-Add `--dry-run` if you just want to check that login and slot-searching
-still work without actually submitting a booking -- handy after the site
-changes its layout on you.
+Use `--dry-run` to test login and slot searching without actually booking.
+Useful when the site changes its layout. `--skip-wait` skips waiting for 7am.
 
-## Getting notified
+## Discord alerts
 
-Set `webhook_url` in `config.json` to a Discord webhook URL and a failed run
-(or a crash -- login broke, site layout changed) pings that channel instead
-of you finding out later that you don't have a court. Set
-`notify_on_success` to `true` too if you also want a ping when it actually
-books something. Leave `webhook_url` blank and this does nothing, same as
-before it existed.
+Set `webhook_url` in `config.json` to a Discord webhook and you'll get a
+message if a run fails or crashes. Set `notify_on_success` to `true` if you
+also want one when it books something. No webhook, no messages.
 
-## Stuff I ran into building this
+## Things that tripped me up
 
-- The "book" button gets disabled with CSS instead of removed from the page
-  before release time, so checking if the button exists isn't enough -- had
-  to check the `disabled` attribute directly.
-- Headless Chrome sometimes renders the calendar before its own JS finishes
-  binding the click handlers, so a plain `sleep()` wasn't reliable. Had to
-  wait on an actual element instead.
+- Before release time the book button is disabled, not hidden, so I have to
+  check the `disabled` attribute instead of just looking for the button.
+- Headless Chrome sometimes shows the calendar before the click handlers are
+  hooked up, so `sleep()` wasn't reliable. It waits for a real element now.
 
-## Heads up
+## Note
 
-This only works against a booking site with no public API, so it's not
-really reusable as-is for anyone else's park district. Only run it against
-something you're actually allowed to book on, and don't hammer the server
-with it.
+This is built for one specific booking site with no API, so it probably
+won't work for your park district without changes. Only use it where you're
+allowed to book, and don't spam the server.

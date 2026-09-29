@@ -1,4 +1,3 @@
-"""argparse entry point."""
 from __future__ import annotations
 
 import argparse
@@ -56,8 +55,6 @@ def main(argv: list[str] | None = None) -> int:
         notify.send(config.webhook_url, f"Booking failed: {exc}")
         return 2
     except Exception as exc:
-        # Anything else (site layout changed, login broke, etc.) -- still
-        # want to know about it instead of finding out hours later.
         log.exception("Run crashed unexpectedly")
         notify.send(config.webhook_url, f"Run crashed: {exc}")
         raise

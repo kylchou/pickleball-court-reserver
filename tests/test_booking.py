@@ -1,8 +1,4 @@
-"""Exercise the search/retry/priority logic in booking.py without a real
-browser -- fake objects stand in for the Selenium driver, wait, and DOM
-elements. This is the part of the codebase that actually matters at 7am on
-a Saturday, so it's the part that most needs a regression net.
-"""
+"""Tests for booking.py using fake driver/wait/element objects instead of a real browser."""
 from __future__ import annotations
 
 from datetime import date, timedelta
@@ -68,10 +64,7 @@ class FakeDriver:
 
 
 class FakeWait:
-    """Stands in for WebDriverWait. Since tests set the driver up front in
-    its final state (nothing actually loads asynchronously here), a single
-    evaluation of the condition is enough -- no need to actually poll.
-    """
+    """Stands in for WebDriverWait. Nothing loads async in tests, so it checks once instead of polling."""
 
     def __init__(self, driver, timeout=10):
         self.driver = driver

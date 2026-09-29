@@ -1,4 +1,3 @@
-"""Central logging setup so every module logs consistently to console + file."""
 from __future__ import annotations
 
 import logging

@@ -1,4 +1,3 @@
-"""Load and validate config.json."""
 from __future__ import annotations
 
 import json
@@ -61,8 +60,6 @@ class Config:
             headless=raw.get("headless", True),
             max_retries=raw.get("max_retries", 5),
             retry_delay_seconds=raw.get("retry_delay_seconds", 2),
-            # Both optional -- leave webhook_url unset and this stays silent,
-            # exactly like before this existed.
             webhook_url=raw.get("webhook_url"),
             notify_on_success=raw.get("notify_on_success", False),
         )

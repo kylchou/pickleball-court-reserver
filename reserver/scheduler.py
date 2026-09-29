@@ -32,7 +32,6 @@ def wait_until_release(release_time: str, timezone_name: str = "America/Chicago"
         time.sleep(chunk)
         remaining = seconds_until(release_time, timezone_name)
 
-    # Fine-grained final approach so we don't overshoot the release window.
     while remaining > 0:
         time.sleep(min(remaining, 0.1))
         remaining = seconds_until(release_time, timezone_name)

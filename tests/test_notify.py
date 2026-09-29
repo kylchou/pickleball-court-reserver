@@ -31,5 +31,4 @@ def test_send_swallows_errors_instead_of_crashing_the_run(monkeypatch):
         raise OSError("webhook host unreachable")
 
     monkeypatch.setattr(notify.urllib.request, "urlopen", broken_urlopen)
-    # Should not raise.
     notify.send("https://example.com/webhook", "test")

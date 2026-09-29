@@ -1,8 +1,3 @@
-"""Optional webhook ping (Discord-compatible) so a bad run doesn't just sit
-in reserver.log until I happen to check it. No new dependency -- Discord
-(and Slack, with a tiny tweak) both take a plain JSON POST, so stdlib
-urllib is enough.
-"""
 from __future__ import annotations
 
 import json
@@ -13,9 +8,7 @@ log = logging.getLogger(__name__)
 
 
 def send(webhook_url: str | None, message: str) -> None:
-    """No-op if no webhook is configured. Never raises -- a broken webhook
-    shouldn't take down a run that otherwise booked the court fine.
-    """
+    """Never raises, so a broken webhook can't fail a run that booked fine."""
     if not webhook_url:
         return
 
